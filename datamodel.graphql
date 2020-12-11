@@ -1,23 +1,21 @@
-type User {
+type Reader {
   id: ID! @id
-  name: String!
-  email: String! @unique
-  posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
-  comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
+  username: String!
+  reviews: [Roast!]! @relation(name: "ReviewToUser", onDelete: CASCADE)
 }
 
-type Post {
+type Kitaab {
   id: ID! @id
   title: String!
-  body: String!
-  published: Boolean!
-  author: User! @relation(name: "PostToUser", onDelete: SET_NULL)
-  comments: [Comment!]! @relation(name: "CommentToPost", onDelete: CASCADE)
+  author: String!
+  isbn: String!
+  reviews: [Roast!]! @relation(name: "ReviewToBook", onDelete: CASCADE)
 }
 
-type Comment {
+type Roast {
   id: ID! @id
   text: String!
-  author: User! @relation(name: "CommentToUser", onDelete: SET_NULL)
-  post: Post! @relation(name: "CommentToPost", onDelete: SET_NULL)
+  rating: Int!
+  author: Reader! @relation(name: "ReviewToUser", onDelete: SET_NULL)
+  book: Kitaab! @relation(name: "ReviewToBook", onDelete: SET_NULL)
 }
